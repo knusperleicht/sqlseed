@@ -1,0 +1,9 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "sqlite",
+    srcs = ["sqlite.go"],
+    importpath = "sqlseed/lib/sqlite",
+    visibility = ["//visibility:public"],
+    deps = ["//lib/fixtures"],
+)

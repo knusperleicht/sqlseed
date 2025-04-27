@@ -1,0 +1,54 @@
+module(
+    name = "sqlseed",
+    version = "0.0.0",
+)
+
+# Bazel Dependencies
+# ---------
+
+bazel_dep(
+    name = "gazelle",
+    version = "0.43.0",
+)
+bazel_dep(
+    name = "rules_go",
+    version = "0.54.0",
+)
+bazel_dep(
+    name = "rules_pkg",
+    version = "1.1.0",
+)
+bazel_dep(
+    name = "rules_python",
+    version = "1.3.0",
+)
+
+# Explicitly manage Go version.
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(
+    name = "go_sdk",
+    version = "1.24.2",
+)
+
+#go_sdk.nogo(
+#    includes = [
+#        "//:__subpackages__",
+#    ],
+#    nogo = "//:nogo_vet",
+#)
+use_repo(go_sdk, "go_sdk")
+
+go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+go_deps.from_file(go_mod = "//:go.mod")
+
+## Do I really need use repo. Normally we should red it from the file.
+use_repo(
+    go_deps,
+)
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    ignore_root_user_error = True,
+    is_default = True,
+    python_version = "3.11",
+)
