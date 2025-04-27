@@ -41,11 +41,6 @@ use_repo(go_sdk, "go_sdk")
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 
-## Do I really need use repo. Normally we should red it from the file.
-use_repo(
-    go_deps,
-)
-
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     ignore_root_user_error = True,

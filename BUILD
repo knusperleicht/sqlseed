@@ -1,5 +1,5 @@
 load("@gazelle//:def.bzl", "gazelle")
-load("@rules_go//go:def.bzl", "nogo")
+load("@rules_go//go:def.bzl", "go_library", "nogo")
 load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
 
 gazelle(name = "gazelle")
@@ -17,4 +17,12 @@ pkg_tar(
         "//app/cli",
         "//app/cli-license",
     ],
+)
+
+go_library(
+    name = "sqlseed",
+    srcs = ["sqlseed.go"],
+    importpath = "github.com/knusperleicht/sqlseed",
+    visibility = ["//visibility:public"],
+    deps = ["//lib/sqlite"],
 )
